@@ -1,9 +1,10 @@
 # Daily Urlist - NextJS 🔗
 
-<img width="1244" alt="Screenshot 2025-06-02 at 15 16 34" src="https://github.com/user-attachments/assets/f73dc1e4-edb4-4606-b3da-b71b913129ff" />
-<img width="1269" alt="Screenshot 2025-06-02 at 15 16 17" src="https://github.com/user-attachments/assets/ce1ba99c-31c6-4625-b8ae-86becc2b0912" />
-<img width="1245" alt="Screenshot 2025-06-02 at 15 15 24" src="https://github.com/user-attachments/assets/6918d01d-1438-434f-a202-b6b51ca3d623" />
 <img width="1248" alt="Screenshot 2025-06-02 at 15 15 10" src="https://github.com/user-attachments/assets/3ca8f3ab-1302-4d3a-84dd-d87c336dbac7" />
+<img width="1245" alt="Screenshot 2025-06-02 at 15 15 24" src="https://github.com/user-attachments/assets/6918d01d-1438-434f-a202-b6b51ca3d623" />
+<img width="1269" alt="Screenshot 2025-06-02 at 15 16 17" src="https://github.com/user-attachments/assets/ce1ba99c-31c6-4625-b8ae-86becc2b0912" />
+<img width="1244" alt="Screenshot 2025-06-02 at 15 16 34" src="https://github.com/user-attachments/assets/f73dc1e4-edb4-4606-b3da-b71b913129ff" />
+
 
 A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, Supabase, and Tailwind CSS.
 
