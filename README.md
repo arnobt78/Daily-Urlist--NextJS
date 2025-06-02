@@ -5,8 +5,7 @@
 <img width="1269" alt="Screenshot 2025-06-02 at 15 16 17" src="https://github.com/user-attachments/assets/ce1ba99c-31c6-4625-b8ae-86becc2b0912" />
 <img width="1244" alt="Screenshot 2025-06-02 at 15 16 34" src="https://github.com/user-attachments/assets/f73dc1e4-edb4-4606-b3da-b71b913129ff" />
 
-
-A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, Supabase, and Tailwind CSS.
+A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, Supabase, TypeScript, and Tailwind CSS.
 
 **Online-Live:** https://daily-urlist.vercel.app/
 
