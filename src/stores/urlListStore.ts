@@ -161,14 +161,28 @@ export async function removeUrlFromList(urlId: string) {
 }
 
 export async function toggleUrlFavorite(id: string) {
-  const current = currentList.get();
-  if (!current || !current.urls || !Array.isArray(current.urls)) {
+  const list = currentList.get() as UrlList | undefined;
+  
+  // Early return if list or urls don't exist
+  if (!list?.id || !list?.urls) {
+    console.warn('No list or URLs found');
     return;
   }
 
-  const url = current.urls.find(url => url.id === id);
-  if (url) {
+  // Find the URL with type safety
+  const urlIndex = list.urls.findIndex((url: UrlItem) => url.id === id);
+  if (urlIndex === -1) {
+    console.warn('URL not found');
+    return;
+  }
+
+  // Get the current URL
+  const url = list.urls[urlIndex];
+
+  try {
     await updateUrlInList(id, { isFavorite: !url.isFavorite });
+  } catch (err) {
+    console.error('Error toggling favorite:', err);
   }
 }
 
