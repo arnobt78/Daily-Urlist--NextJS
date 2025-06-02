@@ -162,7 +162,9 @@ export async function removeUrlFromList(urlId: string) {
 
 export async function toggleUrlFavorite(id: string) {
   const current = currentList.get();
-  if (!current?.urls) return;
+  if (!current || !current.urls || !Array.isArray(current.urls)) {
+    return;
+  }
 
   const url = current.urls.find(url => url.id === id);
   if (url) {
