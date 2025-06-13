@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useStore } from '@nanostores/react';
-import { currentList, getList } from '@/stores/urlListStore';
-import { UrlList } from '@/components/lists/UrlList';
-import { Button } from '@/components/ui/Button';
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useStore } from "@nanostores/react";
+import { currentList, getList } from "@/stores/urlListStore";
+import { UrlList } from "@/components/lists/UrlList";
+import { Button } from "@/components/ui/Button";
 
 export default function ListPage() {
   const { slug } = useParams();
@@ -14,7 +14,7 @@ export default function ListPage() {
 
   useEffect(() => {
     async function fetchList() {
-      if (typeof slug === 'string') {
+      if (typeof slug === "string") {
         await getList(slug);
       }
       setIsLoading(false);
@@ -50,9 +50,9 @@ export default function ListPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-center justify-between mb-16">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-10 md:mb-16 gap-4 md:gap-0">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 flex items-center gap-3">
                 {list.title || `List: ${list.slug}`}
@@ -60,32 +60,12 @@ export default function ListPage() {
                   {list.urls?.length || 0} URLs
                 </span>
               </h1>
-              <p className="mt-2 text-lg text-gray-600">
-                Created {list.createdAt ? new Date(list.createdAt).toLocaleDateString() : 'Recently'}
-              </p>
             </div>
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="outline" 
-                href="/lists"
-                className="text-gray-700 border-gray-300 hover:bg-gray-50 text-lg px-6 py-2.5 rounded-xl"
-              >
-                View All Lists
-              </Button>
-              <Button 
-                href="/new"
-                className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold px-6 py-2.5 rounded-xl shadow-md hover:shadow-xl transition-all duration-200"
-              >
-                Create New List
-              </Button>
-            </div>
+            {/* Add more header actions here if needed */}
           </div>
-
-          <div>
-            <UrlList />
-          </div>
+          <UrlList />
         </div>
       </div>
     </main>
   );
-} 
+}

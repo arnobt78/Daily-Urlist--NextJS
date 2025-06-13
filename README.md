@@ -1,8 +1,6 @@
-# The Urlist 🔗
+# Daily Urlist - NextJS 🔗
 
 A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, Supabase, and Tailwind CSS.
-
-![The Urlist Banner](public/globe.svg)
 
 ## Features ✨
 
@@ -28,19 +26,21 @@ A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, S
 
 ### Prerequisites
 
-- Node.js 16+ 
+- Node.js 16+
 - npm or yarn
 - A Supabase account
 
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/urlist.git
    cd urlist
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    # or
@@ -48,6 +48,7 @@ A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, S
    ```
 
 3. Create a `.env.local` file in the root directory:
+
    ```env
    # Base URL Configuration
    NEXT_PUBLIC_BASE_URL=http://localhost:3000
@@ -58,11 +59,13 @@ A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, S
    ```
 
 4. Set up your Supabase project:
+
    - Create a new project in Supabase
    - Run the migration files in the `supabase/migrations` directory
    - Copy your project URL and anon key to the `.env.local` file
 
 5. Start the development server:
+
    ```bash
    npm run dev
    # or
@@ -99,22 +102,26 @@ urlist/
 ## Key Features in Detail 🔍
 
 ### URL List Management
+
 - Create multiple lists of URLs
 - Add, edit, and remove URLs from lists
 - Automatic metadata fetching for rich previews
 - Custom titles and descriptions for URLs
 
 ### Authentication
+
 - Secure email/password authentication
 - Protected routes for authenticated users
 - User-specific list management
 
 ### Sharing
+
 - Generate shareable links for lists
 - Custom URL slugs for easy sharing
 - Public/private list options
 
 ### UI/UX
+
 - Responsive design for all screen sizes
 - Modern, clean interface
 - Loading states and error handling
@@ -137,6 +144,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact 📧
 
 For any questions or suggestions, please contact:
+
 - Support: arnob_t78@yahoo.com
 - Legal: arnob_t78@yahoo.com
 - Privacy: arnob_t78@yahoo.com
