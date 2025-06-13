@@ -52,20 +52,30 @@ export const UrlCard: React.FC<UrlCardProps> = ({
   const description = metadata?.description;
   const domain = url.url ? new URL(url.url).hostname : "";
 
+  // Fallback for sites that block metadata (e.g., Facebook)
+  const isNoPreview = !metaImage && !description;
+
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:border-blue-100">
       <div className="flex flex-col md:flex-row p-6 md:p-8 gap-6 md:gap-8">
         {/* Image Section */}
         <div className="md:w-1/5 w-full flex-shrink-0 flex items-center justify-center">
           <div className="relative h-40 w-40 md:h-52 md:w-full overflow-hidden rounded-xl shadow-sm bg-gray-50 flex items-center justify-center">
-            <img
-              src={metaImage || logo.src}
-              alt={title}
-              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = logo.src;
-              }}
-            />
+            {isNoPreview ? (
+              <div className="flex flex-col items-center justify-center h-full w-full text-gray-400">
+                <GlobeAltIcon className="h-12 w-12 mb-2" />
+                <span className="text-sm">No preview available</span>
+              </div>
+            ) : (
+              <img
+                src={metaImage || logo.src}
+                alt={title}
+                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = logo.src;
+                }}
+              />
+            )}
             <button
               onClick={() => onToggleFavorite(url.id)}
               className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-lg p-2 hover:bg-black/70 transition-colors cursor-pointer"
@@ -87,10 +97,16 @@ export const UrlCard: React.FC<UrlCardProps> = ({
             >
               {title}
             </h3>
-            {description && (
-              <p className="mt-3 text-lg text-gray-700 line-clamp-3 leading-relaxed font-delicious">
-                {description}
+            {isNoPreview ? (
+              <p className="mt-3 text-lg text-gray-400 italic font-delicious">
+                No preview available for this site.
               </p>
+            ) : (
+              description && (
+                <p className="mt-3 text-lg text-gray-700 line-clamp-3 leading-relaxed font-delicious">
+                  {description}
+                </p>
+              )
             )}
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-4 text-base font-delicious">
@@ -131,6 +147,11 @@ export const UrlCard: React.FC<UrlCardProps> = ({
               )}
             </span>
           </div>
+          {url.notes && (
+            <div className="mt-2 p-2 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-900 text-sm rounded">
+              <span className="font-semibold">Note:</span> {url.notes}
+            </div>
+          )}
         </div>
         {/* Actions Section */}
         <div className="md:w-1/5 w-full flex-shrink-0 flex flex-col gap-4 items-center justify-center">

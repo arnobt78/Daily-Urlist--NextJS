@@ -1,5 +1,5 @@
-import { atom, map } from 'nanostores';
-import { supabase } from '@/lib/supabase';
+import { atom, map } from "nanostores";
+import { supabase } from "@/lib/supabase";
 
 export interface UrlItem {
   id: string;
@@ -8,14 +8,20 @@ export interface UrlItem {
   description?: string;
   createdAt: string;
   isFavorite: boolean;
+  tags?: string[];
+  notes?: string;
+  reminder?: string; // ISO date string
 }
 
 export interface UrlList {
   id: string;
   slug: string;
   title?: string;
+  description?: string;
   urls: UrlItem[];
   createdAt: string;
+  isPublic?: boolean;
+  collaborators?: string[]; // user emails or ids
 }
 
 // Initialize with empty list state
@@ -29,9 +35,9 @@ export async function getList(slug: string) {
 
   try {
     const { data, error: err } = await supabase
-      .from('lists')
+      .from("lists")
       .select()
-      .eq('slug', slug)
+      .eq("slug", slug)
       .single();
 
     if (err) throw err;
@@ -48,13 +54,13 @@ export async function getList(slug: string) {
 export async function createList(slug?: string) {
   isLoading.set(true);
   error.set(null);
-  
+
   try {
     const { data, error: err } = await supabase
-      .from('lists')
+      .from("lists")
       .insert({
         slug: slug || generateRandomSlug(),
-        urls: []
+        urls: [],
       })
       .select()
       .single();
@@ -70,10 +76,16 @@ export async function createList(slug?: string) {
   }
 }
 
-export async function addUrlToList(url: string, title?: string) {
+export async function addUrlToList(
+  url: string,
+  title?: string,
+  tags: string[] = [],
+  notes: string = "",
+  reminder?: string
+) {
   const current = currentList.get();
   if (!current.id || !current.urls) return;
-  
+
   isLoading.set(true);
   error.set(null);
 
@@ -83,15 +95,18 @@ export async function addUrlToList(url: string, title?: string) {
       url,
       title,
       createdAt: new Date().toISOString(),
-      isFavorite: false
+      isFavorite: false,
+      tags,
+      notes,
+      reminder,
     };
 
     const updatedUrls = [...current.urls, newUrl];
 
     const { data, error: err } = await supabase
-      .from('lists')
+      .from("lists")
       .update({ urls: updatedUrls })
-      .eq('id', current.id)
+      .eq("id", current.id)
       .select()
       .single();
 
@@ -105,7 +120,10 @@ export async function addUrlToList(url: string, title?: string) {
   }
 }
 
-export async function updateUrlInList(urlId: string, updates: Partial<UrlItem>) {
+export async function updateUrlInList(
+  urlId: string,
+  updates: Partial<UrlItem>
+) {
   const current = currentList.get();
   if (!current.id || !current.urls) return;
 
@@ -113,14 +131,14 @@ export async function updateUrlInList(urlId: string, updates: Partial<UrlItem>) 
   error.set(null);
 
   try {
-    const updatedUrls = current.urls.map(url => 
+    const updatedUrls = current.urls.map((url) =>
       url.id === urlId ? { ...url, ...updates } : url
     );
 
     const { data, error: err } = await supabase
-      .from('lists')
+      .from("lists")
       .update({ urls: updatedUrls })
-      .eq('id', current.id)
+      .eq("id", current.id)
       .select()
       .single();
 
@@ -142,12 +160,12 @@ export async function removeUrlFromList(urlId: string) {
   error.set(null);
 
   try {
-    const updatedUrls = current.urls.filter(url => url.id !== urlId);
+    const updatedUrls = current.urls.filter((url) => url.id !== urlId);
 
     const { data, error: err } = await supabase
-      .from('lists')
+      .from("lists")
       .update({ urls: updatedUrls })
-      .eq('id', current.id)
+      .eq("id", current.id)
       .select()
       .single();
 
@@ -162,17 +180,17 @@ export async function removeUrlFromList(urlId: string) {
 
 export async function toggleUrlFavorite(id: string) {
   const list = currentList.get() as UrlList | undefined;
-  
+
   // Early return if list or urls don't exist
   if (!list?.id || !list?.urls) {
-    console.warn('No list or URLs found');
+    console.warn("No list or URLs found");
     return;
   }
 
   // Find the URL with type safety
   const urlIndex = list.urls.findIndex((url: UrlItem) => url.id === id);
   if (urlIndex === -1) {
-    console.warn('URL not found');
+    console.warn("URL not found");
     return;
   }
 
@@ -182,11 +200,14 @@ export async function toggleUrlFavorite(id: string) {
   try {
     await updateUrlInList(id, { isFavorite: !url.isFavorite });
   } catch (err) {
-    console.error('Error toggling favorite:', err);
+    console.error("Error toggling favorite:", err);
   }
 }
 
 function generateRandomSlug(length = 6) {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-} 
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  return Array.from(
+    { length },
+    () => chars[Math.floor(Math.random() * chars.length)]
+  ).join("");
+}

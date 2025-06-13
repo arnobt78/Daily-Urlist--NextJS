@@ -50,7 +50,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" href="/logo.png" />
         {/* SEO: Open Graph and Twitter meta tags for logo */}
         <meta property="og:image" content="/logo.png" />
         <meta property="og:image:alt" content="The Urlist Logo" />

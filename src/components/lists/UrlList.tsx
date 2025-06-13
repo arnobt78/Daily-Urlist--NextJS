@@ -34,6 +34,7 @@ export function UrlList() {
     "latest" | "oldest" | "az" | "za" | "favourite"
   >("latest");
   const [search, setSearch] = useState("");
+  const [newNote, setNewNote] = useState("");
 
   useEffect(() => {
     // Fetch metadata for all URLs in the list
@@ -62,8 +63,9 @@ export function UrlList() {
     try {
       const url = new URL(newUrl);
       const metadata = await fetchUrlMetadata(url.toString());
-      await addUrlToList(url.toString(), metadata.title);
+      await addUrlToList(url.toString(), metadata.title, undefined, newNote);
       setNewUrl("");
+      setNewNote("");
     } catch {
       setError("Please enter a valid URL");
     } finally {
@@ -152,15 +154,15 @@ export function UrlList() {
   return (
     <div className="space-y-8">
       {/* Search and filter bar */}
-      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+      <div className="flex flex-row items-center gap-4 mb-4 w-full">
         <Input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search URLs, titles, or descriptions..."
-          className="flex-1 text-lg shadow-sm font-delicious"
+          className="flex-grow text-lg shadow-md font-delicious min-w-[180px] max-w-xs md:max-w-2xl"
         />
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex flex-row gap-2 flex-shrink-0">
           <Button
             type="button"
             className={
@@ -219,23 +221,35 @@ export function UrlList() {
         </div>
       </div>
 
-      <form onSubmit={handleAddUrl} className="flex gap-3">
+      <form
+        onSubmit={handleAddUrl}
+        className="flex flex-col gap-4 bg-gray-50 p-8 rounded-xl shadow-xl border border-gray-200 mx-auto"
+      >
         <Input
           type="url"
           value={newUrl}
           onChange={(e) => setNewUrl(e.target.value)}
           placeholder="Enter a URL to add to your list..."
           error={error}
-          className="flex-1 text-lg shadow-sm font-delicious"
+          className="text-lg shadow-md font-delicious"
         />
-        <Button
-          type="submit"
-          isLoading={isLoading}
-          className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold px-8 py-2.5 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer font-delicious"
-        >
-          <PlusIcon className="h-5 w-5" />
-          Add URL
-        </Button>
+        <textarea
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+          placeholder="Note (optional)"
+          className="text-lg shadow-md font-delicious border rounded-xl px-4 py-2 min-h-[40px] resize-y"
+          rows={2}
+        />
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            isLoading={isLoading}
+            className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold px-8 py-2.5 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer font-delicious"
+          >
+            <PlusIcon className="h-5 w-5" />
+            Add URL
+          </Button>
+        </div>
       </form>
 
       <div className="space-y-8">

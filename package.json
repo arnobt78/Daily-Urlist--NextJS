@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@heroicons/react": "^2.0.18",
     "@nanostores/react": "^0.7.1",
     "@supabase/supabase-js": "^2.49.8",
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.0.0",
+    "file-saver": "^2.0.5",
     "nanostores": "^0.9.3",
     "next": "14.0.3",
     "react": "^18",
