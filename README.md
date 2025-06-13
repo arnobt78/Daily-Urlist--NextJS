@@ -1,6 +1,8 @@
-# Daily Urlist - NextJS 🔗
+# The Urlist 🔗
 
 A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, Supabase, and Tailwind CSS.
+
+![The Urlist Banner](public/globe.svg)
 
 ## Features ✨
 
