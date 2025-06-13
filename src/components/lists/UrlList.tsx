@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useStore } from "@nanostores/react";
 import {
   currentList,
@@ -30,6 +30,10 @@ export function UrlList() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [shareTooltip, setShareTooltip] = useState<string | null>(null);
+  const [sortOption, setSortOption] = useState<
+    "latest" | "oldest" | "az" | "za" | "favourite"
+  >("latest");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     // Fetch metadata for all URLs in the list
@@ -105,10 +109,116 @@ export function UrlList() {
     }
   };
 
+  // Filtering and sorting logic
+  const filteredAndSortedUrls = useMemo(() => {
+    if (!list?.urls) return [];
+    let urls = [...list.urls];
+    // Search filter
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
+      urls = urls.filter(
+        (u) =>
+          (u.title && u.title.toLowerCase().includes(q)) ||
+          (u.url && u.url.toLowerCase().includes(q)) ||
+          (urlMetadata[u.id]?.description &&
+            urlMetadata[u.id]?.description?.toLowerCase().includes(q))
+      );
+    }
+    // Favourites filter
+    if (sortOption === "favourite") {
+      urls = urls.filter((u) => u.isFavorite);
+    }
+    // Sorting
+    if (sortOption === "latest") {
+      urls.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    } else if (sortOption === "oldest") {
+      urls.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+    } else if (sortOption === "az") {
+      urls.sort((a, b) => (a.title || a.url).localeCompare(b.title || b.url));
+    } else if (sortOption === "za") {
+      urls.sort((a, b) => (b.title || b.url).localeCompare(a.title || a.url));
+    }
+    return urls;
+  }, [list?.urls, sortOption, search, urlMetadata]);
+
   if (!list.id || !list.urls) return null;
 
   return (
     <div className="space-y-8">
+      {/* Search and filter bar */}
+      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+        <Input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search URLs, titles, or descriptions..."
+          className="flex-1 text-lg shadow-sm font-delicious"
+        />
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            type="button"
+            className={
+              sortOption === "latest"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-700"
+            }
+            onClick={() => setSortOption("latest")}
+          >
+            Recently Added
+          </Button>
+          <Button
+            type="button"
+            className={
+              sortOption === "oldest"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-700"
+            }
+            onClick={() => setSortOption("oldest")}
+          >
+            Oldest
+          </Button>
+          <Button
+            type="button"
+            className={
+              sortOption === "az"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-700"
+            }
+            onClick={() => setSortOption("az")}
+          >
+            A-Z
+          </Button>
+          <Button
+            type="button"
+            className={
+              sortOption === "za"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-700"
+            }
+            onClick={() => setSortOption("za")}
+          >
+            Z-A
+          </Button>
+          <Button
+            type="button"
+            className={
+              sortOption === "favourite"
+                ? "bg-yellow-400 text-white"
+                : "bg-gray-100 text-gray-700"
+            }
+            onClick={() => setSortOption("favourite")}
+          >
+            Favourites
+          </Button>
+        </div>
+      </div>
+
       <form onSubmit={handleAddUrl} className="flex gap-3">
         <Input
           type="url"
@@ -129,7 +239,7 @@ export function UrlList() {
       </form>
 
       <div className="space-y-8">
-        {list.urls.map((url) => (
+        {filteredAndSortedUrls.map((url) => (
           <UrlCard
             key={url.id}
             url={url}
