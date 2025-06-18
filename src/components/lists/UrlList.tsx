@@ -166,9 +166,10 @@ export function UrlList() {
           <Button
             type="button"
             className={
-              sortOption === "latest"
+              (sortOption === "latest"
                 ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700"
+                : "bg-gray-100 text-gray-700") +
+              " px-6 py-3 text-base min-w-[120px] text-center whitespace-nowrap"
             }
             onClick={() => setSortOption("latest")}
           >
@@ -179,7 +180,8 @@ export function UrlList() {
             className={
               sortOption === "oldest"
                 ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700"
+                : "bg-gray-100 text-gray-700" +
+                  " px-6 py-3 text-base min-w-[80px] text-center whitespace-nowrap"
             }
             onClick={() => setSortOption("oldest")}
           >
@@ -188,9 +190,10 @@ export function UrlList() {
           <Button
             type="button"
             className={
-              sortOption === "az"
+              (sortOption === "az"
                 ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700"
+                : "bg-gray-100 text-gray-700") +
+              " px-6 py-3 text-base min-w-[80px] text-center whitespace-nowrap"
             }
             onClick={() => setSortOption("az")}
           >
@@ -199,9 +202,10 @@ export function UrlList() {
           <Button
             type="button"
             className={
-              sortOption === "za"
+              (sortOption === "za"
                 ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700"
+                : "bg-gray-100 text-gray-700") +
+              " px-6 py-3 text-base min-w-[80px] text-center whitespace-nowrap"
             }
             onClick={() => setSortOption("za")}
           >
@@ -212,7 +216,8 @@ export function UrlList() {
             className={
               sortOption === "favourite"
                 ? "bg-yellow-400 text-white"
-                : "bg-gray-100 text-gray-700"
+                : "bg-gray-100 text-gray-700" +
+                  " px-6 py-3 text-base min-w-[80px] text-center whitespace-nowrap"
             }
             onClick={() => setSortOption("favourite")}
           >
