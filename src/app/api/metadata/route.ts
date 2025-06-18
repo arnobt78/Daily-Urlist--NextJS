@@ -16,7 +16,23 @@ export async function GET(request: Request) {
       },
     });
 
+    // if (!response.ok) {
+    //   throw new Error(
+    //     `Failed to fetch URL: ${response.status} ${response.statusText}`
+    //   );
+    // }
     if (!response.ok) {
+      // If forbidden or error, return minimal fallback metadata
+      if ([400, 403, 500].includes(response.status)) {
+        return NextResponse.json({
+          title: new URL(url).hostname,
+          description: null,
+          image: null,
+          favicon: null,
+          siteName: new URL(url).hostname,
+          error: `No metadata available (HTTP ${response.status})`,
+        });
+      }
       throw new Error(
         `Failed to fetch URL: ${response.status} ${response.statusText}`
       );

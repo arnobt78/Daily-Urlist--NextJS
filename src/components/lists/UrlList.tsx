@@ -154,15 +154,15 @@ export function UrlList() {
   return (
     <div className="space-y-8">
       {/* Search and filter bar */}
-      <div className="flex flex-row items-center gap-4 mb-4 w-full">
+      <div className="flex flex-col gap-2 mb-4 w-full sm:flex-row sm:items-center sm:gap-4">
         <Input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search URLs, titles, or descriptions..."
-          className="flex-grow text-lg shadow-md font-delicious min-w-[180px] max-w-xs md:max-w-2xl"
+          className="w-full sm:flex-grow text-lg shadow-md font-delicious min-w-[180px] sm:max-w-2xl"
         />
-        <div className="flex flex-row gap-2 flex-shrink-0">
+        <div className="flex flex-row flex-wrap gap-2 sm:flex-nowrap sm:gap-2">
           <Button
             type="button"
             className={
