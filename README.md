@@ -1,6 +1,6 @@
 # The Daily Urlist 🔗 -- NextJS
 
-![alt text](<Screenshot 2025-06-13 at 18.35.24-1.png>)![alt text](<Screenshot 2025-06-13 at 18.35.39.png>)![alt text](<Screenshot 2025-06-13 at 18.35.54.png>)![alt text](<Screenshot 2025-06-13 at 18.36.45.png>)![alt text](<Screenshot 2025-06-13 at 18.37.03.png>)![alt text](<Screenshot 2025-06-13 at 18.37.24.png>)
+<img width="1287" alt="Screenshot 2025-06-13 at 18 35 24" src="https://github.com/user-attachments/assets/57519138-235e-4a88-9a90-424c66d768c0" /><img width="1236" alt="Screenshot 2025-06-13 at 18 36 45" src="https://github.com/user-attachments/assets/58932018-6a1e-4883-8113-caf79615f31d" /><img width="1253" alt="Screenshot 2025-06-13 at 18 37 03" src="https://github.com/user-attachments/assets/a7f6f2e7-dcd7-4cbb-9862-cba659742f80" /><img width="1251" alt="Screenshot 2025-06-13 at 18 37 24" src="https://github.com/user-attachments/assets/3d978b49-3bb2-4b77-b63e-fdb8dad92acf" />
 
 A modern, elegant URL bookmarking and sharing platform built with Next.js 13+, Supabase, TypeScript, and Tailwind CSS.
 
